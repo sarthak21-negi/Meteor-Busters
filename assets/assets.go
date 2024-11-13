@@ -1,6 +1,6 @@
 package assets 
 
-import{
+import(
 	"embed"
 	"image"
 	_ "image/png"
@@ -8,7 +8,8 @@ import{
 	"github.com/hajimehoshi/ebiten/v2"
 	"golang.org/x/image/font"
 	"golang.org/x/image/font/opentype"
-}
+)
+
 var assets embed.FS
 
 var PlayerSprite = mustLoadImage("assets/player.png")
@@ -16,13 +17,16 @@ var PlayerSprite = mustLoadImage("assets/player.png")
 func mustLoadImage(name string) *ebiten.Image {
 	f,err := assets.Open(name)
 	if err != nil {
-		panic(error)
+		panic(err)
 	}
-	defer f.close()
+
+	defer f.Close()
+	
 	 img, _, err := image.Decode(f)
 	 if err != nil {
-		panic(error)
+		panic(err)
 	}
 	return ebiten.NewImageFromImage(img)
+
 }
 

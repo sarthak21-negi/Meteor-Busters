@@ -4,9 +4,7 @@ import(
 	"github.com/hajimehoshi/ebiten/v2"
     "shoot/assets"
 )
-type Game struct{
 
-}
 
 func (g *Game) Update() error {
 	return nil

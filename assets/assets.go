@@ -4,7 +4,7 @@ import(
 	"embed"
 	"image"
 	_ "image/png"
-	 // "io/fs"
+	  "io/fs"
 	"github.com/hajimehoshi/ebiten/v2"
 	 // "golang.org/x/image/font"
 	 // "golang.org/x/image/font/opentype"
@@ -12,7 +12,8 @@ import(
 
 var assets embed.FS
 
-var PlayerSprite = mustLoadImage("assets/player.png")
+var PlayerSprite = mustLoadImage("player.png")
+var MeteorSprite = mustLoadAllImages("Meteor/*.png")
 
 func mustLoadImage(name string) *ebiten.Image {
 
@@ -29,4 +30,17 @@ func mustLoadImage(name string) *ebiten.Image {
 	}
 	return ebiten.NewImageFromImage(img)
 
+}
+
+func mustLoadAllImages(path string) []*ebiten.Image{
+	matches,err := fs.Glob(assets, path)
+	if err != nil {
+		panic(err)
+	}
+	images := make([]*ebiten.Image, len(matches))
+	for i, match := range matches{
+		images[i] = mustLoadImage(match)
+	} 
+
+return images
 }

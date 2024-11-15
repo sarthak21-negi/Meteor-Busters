@@ -47,12 +47,29 @@ func (g *Game) Update() error {
 	if g.velocityTimer.IsReady() {
 	g.velocityTimer.Reset()
 	}
-	g.player.Update()
 
+	g.player.Update()
+	g.meteorSpawnTimer.Update()
+	if g.meteorSpawnTimer.IsReady(){
+		g.meteorSpawnTimer.Reset()
+
+		m := NewMeteor()
+		g.meteor = append(g.meteor, m)
+	}
+	for _, m := range g.meteor{
+		m.Update()
+	}
+
+	
+	return nil
 }
 
 func(g *Game) Draw(screen *ebiten.Image){
 	g.player.Draw(screen)
+
+	for _, m := range g.meteor{
+		m.Draw(screen)
+	}
 }
 
 func(g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int){

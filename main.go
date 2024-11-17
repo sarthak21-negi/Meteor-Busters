@@ -1,13 +1,16 @@
 package main
 
-import( 
+import(
+
 	"github.com/hajimehoshi/ebiten/v2"
-    "shoot/assets"
+
+	"shoot/gamecontent"
+
 )
 
 
 func main(){
-	
+	g := gamecontent.NewGame()
 	err := ebiten.RunGame(g)
 
 	if err != nil {

@@ -32,6 +32,7 @@ func NewPlayer(game *Game) *Player{
 	}
 
 	return &Player{
+		game: game,
 		position: pos,
 		rotation: 0,
 		sprite : sprite,
@@ -51,22 +52,22 @@ func (p *Player) Update() {
 	p.shootCoolDown.Update()
 	if p.shootCoolDown.IsReady() && ebiten.IsKeyPressed(ebiten.KeySpace){
 		p.shootCoolDown.Reset()
-	}
+	
 
 	bounds := p.sprite.Bounds()
 	halfW := float64(bounds.Dx()) / 2
 	halfH := float64(bounds.Dy()) / 2
 	
 	spawnPos := Vector{
-		p.position.X + halfW + math.Sin(p.rotation),
-		p.position.Y + halfH + math.Cos(p.rotation),
+		p.position.X + halfW + math.Sin(p.rotation)*bulletSpawnOffSet,
+		p.position.Y + halfH + math.Cos(p.rotation)*bulletSpawnOffSet,
 	}
 
 	bullets := NewBullet(spawnPos, p.rotation)
 	 
 	p.game.AddBullet(bullets)
+  }
 }
-
 func (p *Player) Draw(screen *ebiten.Image){
 	bounds := p.sprite.Bounds()
 	halfW := float64(bounds.Dx()) / 2

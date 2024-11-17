@@ -14,7 +14,7 @@ const (
 	screenWidth = 800
 	screenHeight = 800
 
-	meteorSpawnTime = 2 * time.Second
+	meteorSpawnTime = 1 * time.Second
 
 	baseMeteorVelocity = 0.15
 	meteorSpeedUpAmount = 0.05
@@ -94,11 +94,14 @@ func(g *Game) Draw(screen *ebiten.Image){
 		m.Draw(screen)
 	}
 
+	for _, b := range g.bullets{
+		b.Draw(screen)
+	}
 	text.Draw(screen, fmt.Sprintf("%06d", g.score), assets.ScoreFont, screenWidth/ 2-100, 50, color.White)
 }
 
 func(g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int){
-	return outsideWidth, outsideHeight
+	return screenWidth, screenHeight
 }
 func(g *Game) AddBullet(b *Bullet){
 	g.bullets = append(g.bullets, b)
@@ -108,4 +111,8 @@ func(g *Game) Reset() {
 	g.player = NewPlayer(g)
 	g.meteor = nil
 	g.bullets = nil
+	g.score = 0
+	g.meteorSpawnTimer.Reset()
+	g.baseVelocity = baseMeteorVelocity
+	g.velocityTimer.Reset()
 }

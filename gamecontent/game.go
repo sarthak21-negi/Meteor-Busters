@@ -7,6 +7,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
+	"shoot/assets"
 )
 
 const (
@@ -49,18 +50,34 @@ func (g *Game) Update() error {
 	}
 
 	g.player.Update()
+
 	g.meteorSpawnTimer.Update()
 	if g.meteorSpawnTimer.IsReady(){
 		g.meteorSpawnTimer.Reset()
 
-		m := NewMeteor()
+		m := NewMeteor(g.baseVelocity)
 		g.meteor = append(g.meteor, m)
 	}
 	for _, m := range g.meteor{
 		m.Update()
 	}
 
-	
+	for i, m := range g.meteor{
+		for j, b := range g.bullets {
+			if m.Collider().Intersect(b.Collider){
+				g.meteor = append(g.meteor[:i], g.meteor[i+1:]...)
+				g.bullets = append(g.bullets[:j], g.bullets[j+1:]...)
+			}
+		}
+	}
+
+	for _, m := range g.meteor{
+		if m.Collider().Intersect(g.player.Collider()){
+			g.Reset()
+			break
+		}
+	} 
+
 	return nil
 }
 
@@ -70,8 +87,16 @@ func(g *Game) Draw(screen *ebiten.Image){
 	for _, m := range g.meteor{
 		m.Draw(screen)
 	}
+
+	text.Draw(screen, fmt.Sprintf("%06d", g.score), assets.ScoreFont, screenWidth/ 2-100, 50, color.White)
 }
 
 func(g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int){
 	return outsideWidth, outsideHeight
+}
+
+func(g *Game) Reset() {
+	g.player = NewPlayer(g)
+	g.meteor = nil
+	g.bullets = nil
 }

@@ -6,14 +6,15 @@ import(
 	_ "image/png"
 	  "io/fs"
 	"github.com/hajimehoshi/ebiten/v2"
-	 // "golang.org/x/image/font"
-	 // "golang.org/x/image/font/opentype"
+	  "golang.org/x/image/font"
+	  "golang.org/x/image/font/opentype"
 )
 
 var assets embed.FS
 
 var PlayerSprite = mustLoadImage("player.png")
 var MeteorSprite = mustLoadAllImages("Meteor/*.png")
+var ScoreFont = mustLoadFont("font.ttf")
 
 func mustLoadImage(name string) *ebiten.Image {
 
@@ -43,4 +44,30 @@ func mustLoadAllImages(path string) []*ebiten.Image{
 	} 
 
 return images
+}
+
+func mustLoadFont(name string) font.Face{
+	f, err := assets.ReadFile(name)
+
+	if err != nil {
+		panic(err)
+	}
+
+	tt, err := opentype.Parse(f)
+
+	if err != nil {
+		panic(err)
+	}
+
+	face, err := opentype.NewFace(tt, &opentype.FaceOptions{
+		Size: 45,
+		DPI: 70,
+		Hinting: font.HintingVertical,
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	return face
 }

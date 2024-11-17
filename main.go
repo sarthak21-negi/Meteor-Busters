@@ -7,7 +7,7 @@ import(
 
 
 func main(){
-
+	
 	err := ebiten.RunGame(g)
 
 	if err != nil {

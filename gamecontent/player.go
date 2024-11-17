@@ -13,15 +13,15 @@ const (
 )
 
 type Player struct{
+	game *Game
 	position Vector
 	rotation float64
 	sprite *ebiten.Image
 	shootCoolDown *Timer
 }
 
-func NewPlayer() *Player{
+func NewPlayer(game *Game) *Player{
 	sprite := assets.PlayerSprite
-
 	bounds := sprite.Bounds()
 	halfW := float64(bounds.Dx()) / 2
 	halfH := float64(bounds.Dy()) / 2

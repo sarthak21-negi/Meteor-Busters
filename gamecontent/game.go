@@ -26,7 +26,7 @@ type Game struct{
 	player       *Player
 	meteorSpawnTimer *Timer
 	meteor        []*Meteor
-	bullets       []*bullets
+	bullets       []*Bullet
 
 	score int
 
@@ -47,6 +47,7 @@ func (g *Game) Update() error {
 	g.velocityTimer.Update()
 	if g.velocityTimer.IsReady() {
 	g.velocityTimer.Reset()
+	g.baseVelocity += meteorSpeedUpAmount
 	}
 
 	g.player.Update()
@@ -62,11 +63,16 @@ func (g *Game) Update() error {
 		m.Update()
 	}
 
+	for _, b := range g.bullets{
+		b.Update()
+	}
+
 	for i, m := range g.meteor{
 		for j, b := range g.bullets {
-			if m.Collider().Intersect(b.Collider){
+			if m.Collider().Intersect(b.Collider()){
 				g.meteor = append(g.meteor[:i], g.meteor[i+1:]...)
 				g.bullets = append(g.bullets[:j], g.bullets[j+1:]...)
+				g.score++
 			}
 		}
 	}
@@ -94,6 +100,9 @@ func(g *Game) Draw(screen *ebiten.Image){
 func(g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int){
 	return outsideWidth, outsideHeight
 }
+func(g *Game) AddBullet(b *Bullet){
+	g.bullets = append(g.bullets, b)
+} 
 
 func(g *Game) Reset() {
 	g.player = NewPlayer(g)

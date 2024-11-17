@@ -32,8 +32,8 @@ func NewMeteor(baseVelocity float64) *Meteor{
 	angle := rand.Float64() * 2 * math.Pi
 
 	pos := Vector{
-		X: target.X + math.Cos(angle) * r,
-		Y: target.Y + math.Sin(aangle) * r,
+		X: target.X + math.Cos(angle)*float64(r),
+		Y: target.Y + math.Sin(angle)*float64(r),
 	}
 
 	velocity := baseVelocity + rand.Float64()*1.5
@@ -67,4 +67,33 @@ func (m *Meteor) Update(){
 	m.position.X += m.movement.X 
 	m.position.Y += m.movement.Y
 	m.rotation += m.rotationSpeed 
+}
+
+func (m *Meteor) Draw(screen *ebiten.Image){
+
+	bounds := m.sprite.Bounds()
+
+	halfW := float64(bounds.Dx()) / 2
+	halfH := float64(bounds.Dy()) / 2
+
+	op := &ebiten.DrawImageOptions{}
+
+	op.GeoM.Translate(-halfW, -halfH)
+
+	op.GeoM.Rotate(m.rotation)
+	op.GeoM.Translate(halfW,halfH)
+	op.GeoM.Translate(m.position.X,m.position.Y)
+	screen.DrawImage(m.sprite, op)
+
+}
+func (m *Meteor) Collider() Rect{
+
+	bounds := m.sprite.Bounds()
+	
+	return NewRect(
+		m.position.X,
+		m.position.Y,
+		float64(bounds.Dx()),
+		float64(bounds.Dy()),
+	)
 }

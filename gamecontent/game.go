@@ -29,6 +29,7 @@ type Game struct{
 	bullets       []*Bullet
 
 	score int
+	highScore int
 
 	baseVelocity  float64
 	velocityTimer   *Timer 
@@ -97,7 +98,17 @@ func(g *Game) Draw(screen *ebiten.Image){
 	for _, b := range g.bullets{
 		b.Draw(screen)
 	}
-	text.Draw(screen, fmt.Sprintf("%06d", g.score), assets.ScoreFont, screenWidth/ 2-100, 50, color.White)
+	scoreMsg := fmt.Sprintf("Score: %d", g.score)
+	text.Draw(screen,scoreMsg,assets.ScoreFont,screenWidth/ 2-100, 50, color.White)
+	
+	highScoreMsg := fmt.Sprintf("HighScore: %d", g.highScore)
+	text.Draw(screen,highScoreMsg,assets.ScoreFont,screenWidth/ 2-100, 100, color.White)
+}
+
+func(g *Game) CheckAndUpdateHighScore() {
+	if g.score > g.highScore {
+		g.highScore = g.score
+	}
 }
 
 func(g *Game) Layout(outsideWidth, outsideHeight int) (int, int){
@@ -111,6 +122,7 @@ func(g *Game) Reset() {
 	g.player = NewPlayer(g)
 	g.meteor = nil
 	g.bullets = nil
+	g.CheckAndUpdateHighScore()
 	g.score = 0
 	g.meteorSpawnTimer.Reset()
 	g.baseVelocity = baseMeteorVelocity

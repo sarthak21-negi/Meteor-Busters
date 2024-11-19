@@ -10,6 +10,7 @@ import (
 const (
 	shootCoolDown = time.Millisecond *500
 	bulletSpawnOffSet = 50.0
+	movementSpeed = 5.0
 )
 
 type Player struct{
@@ -49,6 +50,23 @@ func (p *Player) Update() {
 	if ebiten.IsKeyPressed(ebiten.KeyRight){
 		p.rotation += speed
 	}
+
+	dx := math.Sin(p.rotation) * movementSpeed
+	dy := math.Cos(p.rotation) * movementSpeed
+
+	if ebiten.IsKeyPressed(ebiten.KeyUp){
+		p.position.X -= dx
+		p.position.Y -= dy
+	}
+	if ebiten.IsKeyPressed(ebiten.KeyDown){
+		p.position.X += dx
+		p.position.Y += dy
+	}
+
+	if p.position.X < 0 || p.position.X > screenWidth || 
+	p.position.Y < 0 || p.position.Y > screenHeight {
+	 p.game.Reset() 
+	 }
 	p.shootCoolDown.Update()
 	if p.shootCoolDown.IsReady() && ebiten.IsKeyPressed(ebiten.KeySpace){
 		p.shootCoolDown.Reset()

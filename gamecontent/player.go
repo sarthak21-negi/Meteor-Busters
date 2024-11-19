@@ -60,7 +60,7 @@ func (p *Player) Update() {
 	
 	spawnPos := Vector{
 		p.position.X + halfW + math.Sin(p.rotation)*bulletSpawnOffSet,
-		p.position.Y + halfH + math.Cos(p.rotation)*bulletSpawnOffSet,
+		p.position.Y + halfH + math.Cos(p.rotation)*-bulletSpawnOffSet,
 	}
 
 	bullets := NewBullet(spawnPos, p.rotation)

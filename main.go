@@ -8,7 +8,6 @@ import(
 
 )
 
-
 func main(){
 	g := gamecontent.NewGame()
 	err := ebiten.RunGame(g)

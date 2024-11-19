@@ -100,7 +100,7 @@ func(g *Game) Draw(screen *ebiten.Image){
 	text.Draw(screen, fmt.Sprintf("%06d", g.score), assets.ScoreFont, screenWidth/ 2-100, 50, color.White)
 }
 
-func(g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int){
+func(g *Game) Layout(outsideWidth, outsideHeight int) (int, int){
 	return screenWidth, screenHeight
 }
 func(g *Game) AddBullet(b *Bullet){

@@ -9,10 +9,11 @@ import(
 	  "golang.org/x/image/font"
 	  "golang.org/x/image/font/opentype"
 )
+//go:embed player.png Meteors/*.png laser.png font.ttf
 
 var assets embed.FS
 
-var PlayerSprite = mustLoadImage("playerShipblue.png")
+var PlayerSprite = mustLoadImage("player.png")
 var MeteorSprite = mustLoadAllImages("Meteors/*.png")
 var LaserSprite = mustLoadImage("laser.png")
 var ScoreFont = mustLoadFont("font.ttf")

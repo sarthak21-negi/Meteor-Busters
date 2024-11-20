@@ -78,6 +78,8 @@ func (m *Meteor) Draw(screen *ebiten.Image){
 
 	op := &ebiten.DrawImageOptions{}
 
+	scale := 1.5
+	op.GeoM.Scale(scale, scale)
 	op.GeoM.Translate(-halfW, -halfH)
 
 	op.GeoM.Rotate(m.rotation)

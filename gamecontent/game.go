@@ -1,6 +1,7 @@
 package gamecontent
 
 import (
+
 	"fmt"
 	"image/color"
 	"time"
@@ -11,6 +12,7 @@ import (
 )
 
 const (
+	
 	screenWidth = 800
 	screenHeight = 800
 
@@ -88,7 +90,7 @@ func (g *Game) Update() error {
 	return nil
 }
 
-func(g *Game) Draw(screen *ebiten.Image){
+func(g *Game) Draw(screen *ebiten.Image) {
 	g.player.Draw(screen)
 
 	for _, m := range g.meteor{

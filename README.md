@@ -1,4 +1,4 @@
-# Meteor-Busters | Go, 2D Game
+# Meteor-Busters 
 
 ## Overview
 

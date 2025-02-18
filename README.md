@@ -5,7 +5,9 @@
 **Meteor-Busters** is a 2D action game built with **Go** and the **Ebiten** library. In this game, players must shoot meteors while navigating through obstacles. The gameplay focuses on dynamic meteor spawning, player-controlled shooting, and a scoring system with increasing difficulty as the game progresses.
 
 **Game Screenshot**
+
 ![Screenshot 2025-02-18 123840](https://github.com/user-attachments/assets/8d3cb8be-e731-45b2-a62b-6a05a18189b6)
+
 ![Screenshot 2025-02-18 123856](https://github.com/user-attachments/assets/cbee51dc-7c65-4874-af30-db18b9a48e0b)
 
 ## Features
@@ -44,15 +46,11 @@
 1. Navigate into the project folder:
    ```bash
    cd meteor-busters
-Install Go dependencies (if required):
-
-bash
-Copy
-Edit
-go mod tidy
-Run the game:
-
-bash
-Copy
-Edit
-go run main.go
+   ```
+2. Install Go dependencies :
+  ```bash
+   go mod tidy
+  ```
+3. Run the game:
+   ```bash
+   go run main.go

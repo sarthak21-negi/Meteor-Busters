@@ -50,9 +50,10 @@
    cd meteor-busters
    ```
 2. Install Go dependencies :
-  ```bash
+   ```bash
    go mod tidy
    ```
 3. Run the game:
    ```bash
    go run main.go
+   ```

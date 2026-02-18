@@ -51,7 +51,7 @@
    ```
 2. Install Go dependencies :
   ```bash
-      go mod tidy
+   go mod tidy
    ```
 3. Run the game:
    ```bash
